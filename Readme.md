@@ -53,7 +53,7 @@ $ git clone https://github.com/username/react-openLayers3-sample.git
 Use npm i or npm install, which will be use the package.json file located in the current location.
 
 ```
-$ cd react-es6-webpack-minimal-starter-template  
+$ cd react-openLayers3-sample  
 $ npm i
 ```
 
