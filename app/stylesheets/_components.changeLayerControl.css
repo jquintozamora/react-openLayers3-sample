@@ -1,0 +1,29 @@
+/*
+  TODO
+*/
+    .ol-changelayer {
+      right: .5em;
+      top: 2.5em;
+    }
+    
+    .ol-changelayer .ol-changelayerPanel {
+      visibility: hidden;
+      width: 11em;
+      top: 2em;
+      right: 0em;
+      background-color: white;
+      padding: 5px 10px 5px 10px;
+    }
+
+    .ol-changelayer .ol-changelayerPanel__list {
+      list-style: none;
+      padding-left: 0px;
+    }
+    
+    .ol-changelayer .ol-changelayerPanel__button {
+      width: 100%;
+    }
+    
+    .ol-touch .ol-changelayer {
+      top: 60px;
+    }

@@ -1,0 +1,10 @@
+/****************************
+ * OBJECTS - WRAPPERS
+ ****************************/
+
+.appContainer {
+    text-align: center;
+}
+.appContainer__Title {
+    font-size: 24px;
+}
