@@ -2,6 +2,10 @@
  * OBJECTS - WRAPPERS
  ****************************/
 
+body {
+    font-family: $fontDefault;
+}
+
 .appContainer {
     text-align: center;
 }

@@ -52,7 +52,6 @@ body {
 *,
 *:before,
 *:after {
-  position: relative;
   box-sizing: inherit;
 }
 

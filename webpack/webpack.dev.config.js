@@ -78,7 +78,7 @@ module.exports = {
         loader: 'style!css?sourceMap!postcss',
         include: path.resolve(__dirname, './../app/stylesheets')  // Use include instead exclude to improve the build performance
       }
-
-    ]
+    ],
+    noParse: /openlayers/
   }
 };

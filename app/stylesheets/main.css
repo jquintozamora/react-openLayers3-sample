@@ -16,7 +16,6 @@
  *    Normalize.css, resets, box-sizing, ...
  */
 @import "_generic.reset.css";
-@import "_generic.reset.grid.css";
 
 
 /**

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import * as ol from 'openlayers';
-import * as proj4 from 'proj4';
+import ol from 'openlayers';
+import proj4 from 'proj4';
 import { MapOptions } from './../constants/MapConstants';
 import { ChangeLayerControl } from './ChangeLayerControl.jsx';
 import {getWKTData} from './../utils/mock/mockApi.js';
 
-
+window.map = null;
 
 export default class OpenLayers3Map extends Component {
 
@@ -20,8 +20,6 @@ export default class OpenLayers3Map extends Component {
             selectedLayer: MapOptions.Colour,
             color: "rgba(76, 175, 80, 0.7)"
         }
-
-        this._map = null;
 
     }
 
@@ -70,7 +68,6 @@ export default class OpenLayers3Map extends Component {
                     
                     let newValues = [];
                     let errors = [];
-
                     for (var i = 0; i < values.length; i++) {
                         const item = values[i];
                         if (item.hasOwnProperty('error')) {
@@ -80,7 +77,7 @@ export default class OpenLayers3Map extends Component {
                             newValues = newValues.concat(newObj);
                         }
                     }
-                    this.setState({ errors: [...errors, ...this.state.errors], wkts: [...newValues, ...this.state.wkts], selectedWKT: values[0].key });
+                    //this.setState({ errors: [...errors, ...this.state.errors], wkts: [...newValues, ...this.state.wkts], selectedWKT: values[0].key });
                 })
                 .catch(error => {
                     this.setState({ errors: [error, ...this.state.errors] });
@@ -93,14 +90,15 @@ export default class OpenLayers3Map extends Component {
     _configureMap() {
 
         // Register Proj4 in Open Layers
-        ol.proj.setProj4(proj4);
+        //ol.proj.setProj4(proj4);
         // Register EPSG:27700 projection
-        proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717+x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs");
+        //proj4.defs("EPSG:27700", "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717+x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs");
 
-        this._map = new ol.Map({
+        window.map = new ol.Map({
             controls: ol.control.defaults({
                 zoom: true,
-                attribution: false
+                attribution: true,
+                rotate: true
             }).extend([
                 new ol.control.FullScreen(),
                 new ol.control.ScaleLine()
@@ -118,9 +116,9 @@ export default class OpenLayers3Map extends Component {
     }
 
     _removeAllLayers() {
-        for (var i = this._map.getLayers().getLength() - 1; i >= 0; i--) {
-            var l = this._map.getLayers().item(i);
-            this._map.removeLayer(l);
+        for (var i = window.map.getLayers().getLength() - 1; i >= 0; i--) {
+            var l = window.map.getLayers().item(i);
+            window.map.removeLayer(l);
         }
     }
 
@@ -130,16 +128,15 @@ export default class OpenLayers3Map extends Component {
         this._configureMap();
 
         // Call SharePoint list to get Land Registry Numbers and for each one call emapsite web service
-        this._getWKTs();
+        //this._getWKTs();
 
     }
 
 
     _addChangeLayerCustomOLControl() {
-        let {_map } = this;
         const {wkts, selectedWKT, selectedLayer } = this.state;
         // Add Change Layer  custom Control
-        _map.removeControl(this._customControl);
+        window.map.removeControl(this._customControl);
         this._customControl = new ChangeLayerControl({
             updateMapFc: this.updateMap,
             values: [
@@ -152,22 +149,21 @@ export default class OpenLayers3Map extends Component {
             selectedId: selectedLayer,
             selectedWKT: selectedWKT
         });
-        _map.addControl(this._customControl);
+        window.map.addControl(this._customControl);
     }
 
 
     _applySelectedLayer() {
-        let {_map } = this;
         const { layer } = this.state;
         switch (layer) {
             case "OSM":
-                _map.addLayer(new ol.layer.Tile({
+                window.map.addLayer(new ol.layer.Tile({
                     source: new ol.source.OSM()
                 }));
                 break;
             case "Aerial":
                 // imagerySet: 'Road', 'Aerial', 'AerialWithLabels','collinsBart', 'ordnanceSurvey'
-                _map.addLayer(new ol.layer.Tile({
+                window.map.addLayer(new ol.layer.Tile({
                     source: new ol.source.BingMaps({
                         // TODO. Change this Bing Maps key 
                         key: 'Ag69SworaTWDMpEnRFUvs1-Nd-EJ6yf4tB4HFmbBg4qXvLiNuG4Ay14nAnIWAdyt',
@@ -181,7 +177,6 @@ export default class OpenLayers3Map extends Component {
     }
 
     _addLandShareToMap() {
-        let { _map } = this;
         const { wkts, selectedWKT, color } = this.state;
         if (selectedWKT !== undefined) {
             var format = new ol.format.WKT();
@@ -212,22 +207,23 @@ export default class OpenLayers3Map extends Component {
                     vector.getSource().addFeature(feature);
                 });
 
-                _map.addLayer(vector);
+                window.map.addLayer(vector);
 
                 // Centering the map
                 var extent = vector.getSource().getExtent();
-                _map.getView().fit(extent, _map.getSize());
+                window.map.getView().fit(extent, window.map.getSize());
             }
         }
 
     }
 
     render() {
-        let { _map } = this;
+        console.log("render");
+
 
         // TODO. add errors layer using this.state.errors array.
 
-        if (_map) {
+        if (window.map) {
 
             // Add Change Layer custom control to map
             //this._addChangeLayerCustomOLControl();

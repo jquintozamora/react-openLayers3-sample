@@ -1,4 +1,4 @@
-import * as ol from 'openlayers';
+import ol from 'openlayers';
 
 export class ChangeLayerControl extends ol.control.Control {
 
@@ -35,6 +35,8 @@ export class ChangeLayerControl extends ol.control.Control {
     this.selectedWKT = this.options.selectedWKT;
 
     this.renderContents();
+
+    ol.inherits(this, ol.control.Control);
 
   }
 

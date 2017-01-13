@@ -5,7 +5,7 @@ export default class App extends Component {
     render() {
         return (
           <div className="appContainer">
-            <div className="appContainer__Title">This is Open Layers 3 map.</div>
+            {/*<div className="appContainer__Title">This is Open Layers 3 map.</div> */}
             <OpenLayers3Map />             
           </div>
         );
