@@ -5,19 +5,26 @@ import App from './containers/App.jsx'; // App
 
 import css from './../stylesheets/main.css';
 
-renderWithHotReload(App);
+import { polyfillLoader } from 'polyfill-io-feature-detection';
+polyfillLoader({
+  "features": "Promise",
+  "onCompleted": main
+});
 
-// Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('./containers/App.jsx', () => {
-    const App = require('./containers/App.jsx').default;
-    renderWithHotReload(App);
-  });
+function main() {
+  renderWithHotReload(App);
+
+  // Hot Module Replacement API
+  if (module.hot) {
+    module.hot.accept('./containers/App.jsx', () => {
+      const App = require('./containers/App.jsx').default;
+      renderWithHotReload(App);
+    });
+  }
 }
-
 function renderWithHotReload(App) {
-  render (
-      <App />
+  render(
+    <App />
     , document.getElementById('starter')
   );
 }
