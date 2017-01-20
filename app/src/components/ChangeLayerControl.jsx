@@ -34,9 +34,11 @@ export class ChangeLayerControl extends ol.control.Control {
     this.selectedId = this.options.selectedLayer;
     this.selectedWKT = this.options.selectedWKT;
 
+    console.log('constructor');
     this.renderContents();
 
     ol.inherits(this, ol.control.Control);
+    
 
   }
 
