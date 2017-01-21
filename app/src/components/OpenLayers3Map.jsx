@@ -118,9 +118,9 @@ export default class OpenLayers3Map extends Component {
     }
 
     _removeAllLayers() {
-        for (var i = window.map.getLayers().getLength() - 1; i >= 0; i--) {
-            var l = window.map.getLayers().item(i);
-            window.map.removeLayer(l);
+        for (var i = this._map.getLayers().getLength() - 1; i >= 0; i--) {
+            var l = this._map.getLayers().item(i);
+            this._map.removeLayer(l);
         }
     }
 
@@ -138,8 +138,7 @@ export default class OpenLayers3Map extends Component {
     _addChangeLayerCustomOLControl() {
         const {wkts, selectedWKT, selectedLayer } = this.state;
         // Add Change Layer  custom Control
-        //window.map.removeControl(this._customControl);
-        console.log('Adding custom control');
+        this._map.removeControl(this._customControl);
         this._customControl = new ChangeLayerControl({
             updateMapFc: this.updateMap,
             values: [
@@ -153,8 +152,6 @@ export default class OpenLayers3Map extends Component {
             selectedWKT: selectedWKT
         });
         this._map.addControl(this._customControl);
-        console.log('Added custom control');
-        console.log(this._customControl);
     }
 
 
@@ -162,13 +159,13 @@ export default class OpenLayers3Map extends Component {
         const { layer } = this.state;
         switch (layer) {
             case "OSM":
-                window.map.addLayer(new ol.layer.Tile({
+                this._map.addLayer(new ol.layer.Tile({
                     source: new ol.source.OSM()
                 }));
                 break;
             case "Aerial":
                 // imagerySet: 'Road', 'Aerial', 'AerialWithLabels','collinsBart', 'ordnanceSurvey'
-                window.map.addLayer(new ol.layer.Tile({
+                this._map.addLayer(new ol.layer.Tile({
                     source: new ol.source.BingMaps({
                         // TODO. Change this Bing Maps key 
                         key: 'Ag69SworaTWDMpEnRFUvs1-Nd-EJ6yf4tB4HFmbBg4qXvLiNuG4Ay14nAnIWAdyt',
@@ -228,7 +225,6 @@ export default class OpenLayers3Map extends Component {
 
 
         // TODO. add errors layer using this.state.errors array.
-        console.log(this._map);
         if (this._map) {
             console.log("this._map");
 
@@ -236,10 +232,10 @@ export default class OpenLayers3Map extends Component {
             this._addChangeLayerCustomOLControl();
 
             // Remove all layers
-            //this._removeAllLayers();
+            this._removeAllLayers();
 
             // Apply the selected layer based on this.state.layer
-            //this._applySelectedLayer();
+            this._applySelectedLayer();
 
             // Add land shape to map in WKT format
             this._addLandShareToMap();
