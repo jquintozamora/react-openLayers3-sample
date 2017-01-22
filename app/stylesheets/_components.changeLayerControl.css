@@ -1,29 +1,48 @@
 /*
   TODO
 */
-    .ol-changelayer {
+  
+.ol-changelayer {
       right: .5em;
-      top: 2.5em;
-    }
+      top: 45px;
     
-    .ol-changelayer .ol-changelayerPanel {
+    
+  & .ol-changelayerPanel {
       visibility: hidden;
       width: 11em;
-      top: 2em;
+      top: 38px;
       right: 0em;
       background-color: white;
       padding: 5px 10px 5px 10px;
-    }
+      text-align: left;
+  }
 
-    .ol-changelayer .ol-changelayerPanel__list {
-      list-style: none;
-      padding-left: 0px;
+  & .ol-changelayerPanel__Title{
+    text-align: center;
+    padding-bottom: 8px;
+    padding-top: 5px;
+    font-size: 18px;
+    border-bottom: 1px solid black;
+  }
+
+  & .ol-changelayerPanel__Section {
+    margin-top: 10px;
+  }
+  
+  & .ol-changelayerPanel__list {
+    list-style: none;
+    padding-left: 0px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+    & li {
+      padding-top: 2px;
+      padding-bottom: 2px;
     }
+  }
     
-    .ol-changelayer .ol-changelayerPanel__button {
-      width: 100%;
-    }
-    
-    .ol-touch .ol-changelayer {
-      top: 60px;
-    }
+  & .ol-changelayerPanel__button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

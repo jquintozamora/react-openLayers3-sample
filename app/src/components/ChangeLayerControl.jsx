@@ -107,8 +107,8 @@ export class ChangeLayerControl extends ol.control.Control {
       section.className = 'ol-changelayerPanel__Section';
 
       var titleLandOptions = document.createElement('div');
-      titleLandOptions.className = 'ol-changelayerPanel__SelectRegistry';
-      titleLandOptions.innerHTML = "Land Registry #:";
+      titleLandOptions.className = 'ol-changelayerPanel__SectionSelect';
+      titleLandOptions.innerHTML = "WKT Number:";
       section.appendChild(titleLandOptions);
 
       var selectList = document.createElement("select");
