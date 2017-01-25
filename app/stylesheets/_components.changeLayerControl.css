@@ -5,8 +5,7 @@
 .ol-changelayer {
       right: .5em;
       top: 45px;
-    
-    
+
   & .ol-changelayerPanel {
       visibility: hidden;
       width: 11em;

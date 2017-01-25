@@ -5,6 +5,7 @@ import App from './containers/App.jsx'; // App
 
 import css from './../stylesheets/main.css';
 
+// More info: https://blog.josequinto.com/2017/01/20/getting-react-to-load-polyfills-only-when-needed/
 import { polyfillLoader } from 'polyfill-io-feature-detection';
 polyfillLoader({
   "features": "Promise",
