@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ol from 'openlayers';
-import proj4 from 'proj4';
+// import proj4 from 'proj4';
 import { MapOptions } from './../constants/MapConstants';
 import { ChangeLayerControl } from './ChangeLayerControl.jsx';
 import { getWKTData } from './../utils/mock/mockApi.js';
 
-window.map = null;
+//window.map = null;
 
 export default class OpenLayers3Map extends Component {
 
@@ -18,7 +18,9 @@ export default class OpenLayers3Map extends Component {
             errors: [],
             layer: "OSM",
             selectedLayer: MapOptions.Colour,
-            color: "rgba(76, 175, 80, 0.7)"
+            // red:     rgba(174, 7, 7, 0.7)
+            // green:   rgba(76, 175, 80, 0.7)
+            color: "rgba(174, 7, 7, 0.7)" 
         }
 
         this._map = null;
@@ -29,7 +31,7 @@ export default class OpenLayers3Map extends Component {
     updateMap = (selectedId, selectedWKT) => {
         switch (selectedId) {
             case MapOptions.Colour:
-                this.setState({ selectedLayer: selectedId, layer: "OSM", color: "rgba(76, 175, 80,0.7)", selectedWKT: selectedWKT });
+                this.setState({ selectedLayer: selectedId, layer: "OSM", color: "rgba(174, 7, 7, 0.7)", selectedWKT: selectedWKT });
                 break;
             case MapOptions.Grey:
                 this.setState({ selectedLayer: selectedId, layer: "OSM", color: "rgba(176,176,176,0.7)", selectedWKT: selectedWKT });
@@ -43,7 +45,6 @@ export default class OpenLayers3Map extends Component {
             default:
         }
     }
-
 
     // This promise is useful to return the titleNumber and to avoid that all promises fails when one of then do it.
     _promiseWrapperAttachTitle = function (prom, titleNumber) {
@@ -117,12 +118,7 @@ export default class OpenLayers3Map extends Component {
         });
     }
 
-    _removeAllLayers() {
-        for (var i = this._map.getLayers().getLength() - 1; i >= 0; i--) {
-            var l = this._map.getLayers().item(i);
-            this._map.removeLayer(l);
-        }
-    }
+
 
     componentDidMount() {
 
@@ -154,7 +150,13 @@ export default class OpenLayers3Map extends Component {
         this._map.addControl(this._customControl);
     }
 
-
+    _removeAllLayers() {
+        for (var i = this._map.getLayers().getLength() - 1; i >= 0; i--) {
+            var l = this._map.getLayers().item(i);
+            this._map.removeLayer(l);
+        }
+    }
+    
     _applySelectedLayer() {
         const { layer } = this.state;
         switch (layer) {
@@ -179,7 +181,6 @@ export default class OpenLayers3Map extends Component {
     }
 
     _addLandShareToMap() {
-        console.log('_addLandShareToMap');
         const { wkts, selectedWKT, color } = this.state;
         if (selectedWKT !== undefined) {
             var format = new ol.format.WKT();
@@ -221,18 +222,16 @@ export default class OpenLayers3Map extends Component {
     }
 
     render() {
-        console.log("render");
-
-
         // TODO. add errors layer using this.state.errors array.
+        console.log(this._map);
         if (this._map) {
-            console.log("this._map");
 
             // Add Change Layer custom control to map
             this._addChangeLayerCustomOLControl();
 
             // Remove all layers
             this._removeAllLayers();
+            console.log("this._removeAllLayers()");
 
             // Apply the selected layer based on this.state.layer
             this._applySelectedLayer();

@@ -45,6 +45,8 @@ module.exports = {
      * This is where the magic happens! You need this to enable Hot Module Replacement!
      */
     new webpack.HotModuleReplacementPlugin(),
+    // prints more readable module names in the browser console on HMR updates
+    new webpack.NamedModulesPlugin(),
     /**
       * When there are errors while compiling this plugin skips the emitting phase (and recording phase), 
       * so there are no assets emitted that include errors. The emitted flag in the stats is false for all assets. 
