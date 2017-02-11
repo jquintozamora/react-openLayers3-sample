@@ -46,6 +46,7 @@ export default class OpenLayers3Map extends Component {
         }
     }
 
+    // Wrapper for Promises.all
     // This promise is useful to return the titleNumber and to avoid that all promises fails when one of then do it.
     _promiseWrapperAttachTitle = function (prom, titleNumber) {
         return new Promise((resolve, reject) => {
